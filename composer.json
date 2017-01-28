@@ -1,0 +1,21 @@
+{
+    "name": "fdt2k/baseobject",
+    "version":"1.0",
+    "description": "ROOT object for php",
+    "license": "BSD-3-Clause-Attribution",
+    "authors": [
+        {
+            "name": "Fabien Di Tore",
+            "email": "fabien@ditore.ch"
+        }
+    ],
+
+    "autoload": {
+
+        "files": [
+            "src/IObject.php"
+        ]
+    },
+    "minimum-stability": "dev"
+
+}
