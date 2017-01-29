@@ -1,12 +1,14 @@
 <?php
 
+include (dirname(__DIR__)."/src/IObject.php");
+
 class DataTest extends PHPUnit_Framework_TestCase
 {
     // ...
 
 	public function testCanBeSetted()
 	{
-		$object =new ICE\core\IObject();
+		$object =new IObject();
 		$this->assertNotNull($object);
 
 		$object->setDatas(array('a'=>'1'));
@@ -66,7 +68,7 @@ class DataTest extends PHPUnit_Framework_TestCase
 
 
 	public function testCanBeDeleted(){
-		$object =new ICE\core\IObject();
+		$object =new IObject();
 		$this->assertNotNull($object);
 		$object->setDatas(array('a'=>'1'));
 
@@ -81,7 +83,7 @@ class DataTest extends PHPUnit_Framework_TestCase
 	}
 
 	public function testMagic(){
-		$object =new ICE\core\IObject();
+		$object =new IObject();
 		$this->assertNotNull($object);
 
 
@@ -91,11 +93,39 @@ class DataTest extends PHPUnit_Framework_TestCase
 
 		$object->addField('test');
 		$this->assertTrue($object->hasField());
-		
+
 		$object->removeDatas(array('field'));
 		$this->assertFalse($object->hasField());
 
 	//	vaR_dump($o);
+	}
+
+	public function testWith(){
+		$object=  new IObject();
+
+		$this->assertNotNull($object);
+
+		$object->setObject(new \IObject());
+		$this->assertTrue($object->hasObject());
+
+		$object->withObject(function($o){
+			$o->setSuperVar('testingunit');
+		});
+
+		$this->assertEquals($object->getObject()->getSuperVar(),'testingunit');
+
+
+		//multiple objects
+		$object->addObject(new \IObject());
+		$object->addObject(new \IObject());
+		$this->assertTrue(count($object->getObject())==3);
+		$object->withObject(function($o){
+			$o->setSuperVar('testingunit');
+		});
+		foreach($object->getObject() as $o){
+			$this->assertEquals($o->getSuperVar(),'testingunit');
+		}
+
 	}
 
 }

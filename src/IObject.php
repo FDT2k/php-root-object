@@ -1,5 +1,6 @@
 <?php
 
+
 class IObject{
 	/**
 	 *
@@ -25,6 +26,15 @@ class IObject{
 	public function errorOccured(){
 		return $this->bError;
 	}
+
+	function isEmpty($val) {
+		//return not empty if ==0 or == "0"
+		if(is_string($val)){
+			$val = trim($val);
+		}
+		return empty($val) && $val !== 0 && $val !=="0";
+	}
+
 
 	/**
 	 * @see IMCoreObject
@@ -140,7 +150,7 @@ class IObject{
 
 	}
 
-	
+
 
 	public function setOption($option,$value){
 		$this->options[$this->configGroup][$option]=$value;
@@ -182,7 +192,27 @@ class IObject{
 			$property = substr($name, 3);
 			$property = lcfirst($property);
 			return $this->__ice_magic_get($property);
-		}/*else{
+		}
+		else if (  ($pos = strpos($name, 'with'))===0 && strlen($name)>4      ) {
+			// with keyword
+			$property = substr($name, 4);
+
+			$property = lcfirst($property);
+		//	var_dump($property);
+			$data = $this->__ice_magic_get($property);
+		//	var_dump($data);
+			$callback = $args[0];
+			if(is_callable($callback)){
+					if(is_array($data)){
+						foreach($data as $o){
+							$callback($o);
+						}
+					}else{
+						$callback($data);
+					}
+			}
+		}
+		/*else{
 			return parent::__call($name,$args);
 		}*/
 		else if (($pos = strpos($name, 'add'))===0 && strlen($name)>3){
@@ -204,7 +234,7 @@ class IObject{
 			$property = lcfirst($property);
 			$data = $this->__ice_magic_get($property);
 
-			if (!\isEmpty($data)){
+			if (!$this->isEmpty($data)){
 				return true;
 			}
 			return false;
@@ -215,7 +245,7 @@ class IObject{
 
 			return $data === true;
 		}else{
-			Throw new \ICE\core\Exception('magic call failed',0);
+			Throw new Exception('magic call failed, You used a wrong keyword',0);
 		}
 		// should i implement push pop and del here ?
 
@@ -229,8 +259,11 @@ class IObject{
 
 	public function __ice_magic_get($property){ // do not return object
 		if(!empty($property)){
-			return $this->ice_magic_datas[$this->group][$property];
+			if(isset($this->ice_magic_datas[$this->group][$property])){
+				return $this->ice_magic_datas[$this->group][$property];
+			}
 		}
+		return false;
 	}
 
 	public function __ice_magic_set($property,$value){
