@@ -1,0 +1,9 @@
+before_script:
+  - apt-get update -qq && apt-get install -y -qq phpunit
+
+phpunit:
+  stage: test
+  script:
+    - phpunit tests
+  only:
+    - master
