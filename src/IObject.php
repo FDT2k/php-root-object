@@ -18,6 +18,7 @@ class IObject{
 	protected $ice_magic_datas=array();
 	protected $group = 'global';
 	protected $internalHash="";
+	protected $forwardErrorTo= NULL;
 
 	/**
 	 * @see IMCoreObject
@@ -46,6 +47,9 @@ class IObject{
 		$this->error_message =$error_message;
 		$this->error_code = $code;
 		$this->bError = true;
+		if(NULL !== $this->forwardErrorTo){
+			$this->forwardErrorTo->forwardError($this);
+		}
 	}
 
 	public function forwardError($object){
@@ -53,6 +57,11 @@ class IObject{
 		if(is_object($object)){
 			$this->setError($object->getError(),$object->getErrorCode());
 		}
+	}
+
+	public function setDefaultForwardErrorTo($object){
+		$this->forwardErrorTo = $object;
+
 	}
 
 	public function setInfo($message){

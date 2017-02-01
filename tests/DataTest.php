@@ -128,4 +128,21 @@ class DataTest extends PHPUnit_Framework_TestCase
 
 	}
 
+
+	public function testForwardError(){
+		$o = new IObject();
+		$oMain = new IObject();
+
+		$o->setDefaultForwardErrorTo($oMain);
+		$this->assertFalse($oMain->hasError());
+		$o->setError("error_msg");
+
+		$this->assertTrue($oMain->hasError());
+
+		$this->assertEquals($oMain->getError(),$o->getError());
+
+		$this->assertEquals($oMain->getError(),"error_msg");
+
+	}
+
 }
