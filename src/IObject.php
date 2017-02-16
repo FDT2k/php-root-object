@@ -342,6 +342,14 @@ class IObject{
 		return $this;
 	}
 
+	function clearData(){
+		$this->ice_magic_datas = array();
+		return $this;
+	}
+//alias
+	function removeData($data){
+		return $this->removeDatas($data);
+	}
 	function removeDatas($datas){
 		if(is_array($datas)){
 			foreach($datas  as $value){
