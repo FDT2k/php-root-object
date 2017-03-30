@@ -1,8 +1,8 @@
 {
     "name": "fdt2k/baseobject",
     "version":"1.0",
-    "description": "ROOT object for php",
-    "license": "BSD-3-Clause-Attribution",
+    "description": "ROOT style object for php",
+    "license": "MIT",
     "authors": [
         {
             "name": "Fabien Di Tore",

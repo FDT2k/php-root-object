@@ -355,22 +355,19 @@ class IObject{
 			foreach($datas  as $value){
 
 				unset($this->ice_magic_datas[$this->group][$value] );
-				//var_dump($this->ice_magic_datas[$this->group]);
-			///	var_dump($this);
+
 			}
 		}
 		return $this;
 
 	}
-
+	//$filter stands for include ;)
 	function getDatas($filter='',$exclude=''){
-		//throw new \ICE\core\Exception('test',9);
-		//var_dump($filter);
+
 		$datas =  $this->ice_magic_datas[$this->group];
 		if(is_array($filter) && sizeof($filter)>0){
 			$d = $datas;
 			$datas = array();
-		//	var_dump($filter);
 			foreach($d as $key=>$value){
 				if(in_array($key, $filter)){
 					$datas[$key]=$value;
@@ -390,7 +387,7 @@ class IObject{
 		}
 		return $datas;
 	}
-
+	//alias for getDatas
 	function getData($filter='',$exclude=''){
 		return $this->getDatas($filter,$exclude);
 	}

@@ -1,0 +1,30 @@
+ROOT object for php providing the following features
+
+1. Create function constructor.
+Allow to instanciate and chain
+
+$class::create()->foo();
+
+
+2. Allow retrieving inherited classes and interfaces
+
+
+3. Magic setter and getter with builtin functions
+
+  //set and get
+
+  $instance->setFooVar('hello world');
+  //returns nothing
+
+
+  $instance->getFooVar();
+  // returns hello world;
+
+  $instance->hasFooVar();
+  //returns true
+
+  $instance->hasBarVar();
+  //return false
+
+  //iterate if the content of fooVar is an Array and call the function parameter. If it's not an array it only call the callback with the value
+  $instance->withFooVar(function($value){});
