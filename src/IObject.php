@@ -100,6 +100,11 @@ class IObject{
 	public function getClassName(){
 		return get_class($this);
 	}
+	//class name without namespace
+	public function getUnitName(){
+		$class = $this->getClassName();
+		return substr($class,strrpos($class,'\\'));
+	}
 
 	/*public function setCaller($class){
 		if(empty($this->caller)){
