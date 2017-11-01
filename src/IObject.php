@@ -103,7 +103,10 @@ class IObject{
 	//class name without namespace
 	public function getUnitName(){
 		$class = $this->getClassName();
-		return substr($class,strrpos($class,'\\'));
+		if(strrpos($class,'\\') !== false){
+			return substr($class,strrpos($class,'\\')+1);
+		}
+		return $class;
 	}
 
 	/*public function setCaller($class){
